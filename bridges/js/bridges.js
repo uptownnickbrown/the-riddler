@@ -226,7 +226,23 @@ var analyzeGraph = function(g) {
   }
 };
 
+var runBulkTrial = function (totalRows, totalCols, failureRate, numTrials) {
+  var fail = failureRate || .5;
+  var trials = numTrials || 1000;
+	console.log('analyzing ' + totalRows + ' rows and ' + totalCols + ' columns, ' + numTrials + ' times with fail rate ' + failRate);
 
+  var i = 0,
+		trials = numTrials,
+		results = [];
+
+	while (i < trials) {
+		results.push(analyzeGraph(nightPasses(newGraph(totalRows,totalCols),failureRate)));
+		i += 1;
+		process.stdout.write(".");
+	}
+
+	return results.filter(function(result){return result.length > 0}).length / trials;
+};
 
 $(document).ready(function() {
 
@@ -234,20 +250,28 @@ $(document).ready(function() {
   drawGraph($('.oneRow .graphic'), newGraph(1,2));
   drawGraph($('.twoRow .graphic'), newGraph(2,3));
 
+
+
   // Set up button handlers
   function setupButtons() {
-    $('.thousandRunTrial .button.goAgain').click(function() {
-      console.log('clicked!');
-      buildThousandRunSection();
-      return false;
+    $('.goRedo').click(function(){
+        var $this = $(this);
+        $this.toggleClass('again');
+        if($this.hasClass('again')){
+            $this.text('Again?');
+        }
     });
 
-    $('.tenRunTrial .button.goAgain').click(function() {
+    $('.oneRow .goRedo').click(function() {
+      
+    });
+
+    $('.oneRow .goRedo').click(function() {
       console.log('clicked!');
       buildTenRunSection();
       return false;
     });
-  }
+  };
 
   //setupButtons();
 
