@@ -4,10 +4,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-  <script src="./js/jquery-1.9.1.js"></script>
-  <script src="./js/d3.v3.min.js"></script>
+  <script type="text/javascript" src="./js/jquery-1.9.1.js"></script>
+  <script type="text/javascript" src="./js/graphlib.js"></script>
+  <script type="text/javascript" src="./js/heap.js"></script>
   <link rel="stylesheet" href="./css/style.css">
-  <script src="./js/bridges.js"></script>
+  <script type="text/javascript" src="./js/bridges.js"></script>
   <title>Night Falls. A Storm Rolls In. Can A Simulation Help You Cross The River?</title>
 </head>
 
@@ -19,7 +20,7 @@
     </h3>
   </header>
   <div class='mainContainer'>
-    <section class='intro'>
+    <section id='intro'>
       <blockquote>
         You’re on the north shore of a river, and want to cross to the south, via a series of 13 bridges and six islands, which you can see in the diagram below. But, as you approach the water, night falls, a bad storm rolls in, and you’re forced to wait until
         morning to try to cross. Overnight, the storm could render some of the bridges unusable — it has a 50 percent chance of knocking out each of the bridges. (The chance is independent for each bridge.)
@@ -32,15 +33,31 @@
         Question 1: What’s the probability you will be able to cross the river in the morning? (You have no boat, can’t swim, can’t fix the bridges, etc. No tricks.)
       </blockquote>
     </section>
-    <section class='simplify'>
+    <section id='simplify'>
       <p class='copy'>When tackling a problem like <a href="https://twitter.com/ollie">Ollie Roeder's</a> latest Riddler, I like to start by breaking it down into a simpler problem. If the question is about a river with 6 islands arranged in 2 rows / 3 columns, what
-        is the answer for no islands? For 1 row / 2 columns of islands? Take a look at at these diagrams below and click to simulate 10,000 results of the scenario:</p>
+        is the answer for a river with no islands? For one row and two columns of islands? Take a look at at these diagrams below and click to simulate 10,000 results of the scenario:</p>
       <div class='threeCharts'>
         <div class='inset zeroRow'>
-          <img src='bridges.png'>
+            <div class='graphic'>
+              </div>
+              <div class="buttonBank">
+                <button class="button inline" title="Go">Go</button>
+              </div>
         </div>
         <div class='inset oneRow'>
-          <img src='bridges.png'>
+          <svg width="170" height="140" viewBox="0 0 170 140" xmlns="http://www.w3.org/2000/svg">
+
+            <rect x="10" y="10" width="150" height="120" fill="#ECECEC" />
+            <rect x="10" y="10" width="150" height="8" fill="#ED6F39" />
+            <rect x="10" y="122" width="150" height="8" fill="#ED6F39" />
+            <rect x="50" y="60" width="20" height="20" fill="#ED6F39" />
+            <line x1="60" y1="80" x2="60" y2="122" stroke="#ED6F39" stroke-width="2"/>
+            <line x1="60" y1="18" x2="60" y2="60" stroke="#ED6F39" stroke-width="2"/>
+            <rect x="100" y="60" width="20" height="20" fill="#ED6F39" />
+            <line x1="110" y1="80" x2="110" y2="122" stroke="#ED6F39" stroke-width="2"/>
+            <line x1="110" y1="18" x2="110" y2="60" stroke="#ED6F39" stroke-width="2"/>
+            <line x1="70" y1="70" x2="100" y2="70" stroke="#ED6F39" stroke-width="2"/>
+          </svg>
         </div>
         <div class='inset twoRow'>
           <img src='bridges.png'>
@@ -201,7 +218,7 @@
       </table>
       <p class='copy'>Out of 32 possible combinations of surviving bridges, 16 scenarios have at least one surviving path from the north shore to the south. Where do we go from here?
     </section>
-    <section class='question-1'>
+    <section id='question-1'>
       <p class='copy'>Extrapolating that to two rows and three columns of islands gets a little trickier. There are 13 bridges, so there are 2<sup>13</sup>, or 8096 combinations or bridges that may survive until morning. And there are 29 unique wiorking paths:</p>
       <div class='singleChart'>
         <div class='inset oneRow simulatePaths'>
@@ -219,7 +236,7 @@
         </div>
       </div>
     </section>
-    <section class='question-2'>
+    <section id='question-2'>
       <p class='copy'>Ok, we feel pretty good about the first question — you've got a 50% chance of making it across the river. What about the second question?</p>
       <blockquote>
         Question 2: What’s the probability you’ll be able to cross this river in the morning, after the same storm — with the same independent 50 percent chance of knocking out each bridge — rolls through?
@@ -323,7 +340,7 @@
           <p class='copy'>Unless you had some crazy outlying results in your simulation (in which case...run it again!) you'll see 50% is the answer to the generalized question for all values of N.</p>
     </section>
 
-    <section class='explore'>
+    <section id='explore'>
       <p class='copy'>If you're like me you may be wondering, what makes this scenario special? Are the values of N rows, N + 1 columns and a 50% chance of overnight bridge failure special? I'm glad you asked — use the sandbox below to tweak the values and see what happens
         for yourself!</p>
       <div class='twoCharts'>

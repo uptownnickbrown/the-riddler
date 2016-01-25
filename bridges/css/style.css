@@ -138,7 +138,7 @@ blockquote, .copy, label, output {
 	text-align: center;
 }
 
-.explore {
+#explore {
 	margin-bottom: 100px;
 }
 
@@ -194,15 +194,22 @@ blockquote a {
 }
 
 .threeCharts {
-  width:600px;
+  width:720px;
   margin: 0px auto;
   display:flex;
 }
 
 .threeCharts .inset {
-  width:180px;
+  width:230px;
   margin: 0px auto;
 }
+
+.threeCharts .inset .graphic {
+  width:230px;
+  height:190px;
+  margin: 0 auto;
+}
+
 .threeCharts img {
   width: 100%;
 }
@@ -284,11 +291,11 @@ th, td {
 }
 
 .pathResults tr {
-  background-color:rgb(100, 180, 100);
+  background-color:#64B464;
 }
 
 .pathResults .noPaths {
-  background-color: rgb(240, 100, 100);
+  background-color: #F06464;
 }
 
 .simulationResults tr:nth-child(odd) {
