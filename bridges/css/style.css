@@ -238,8 +238,12 @@ blockquote a {
   width:340px;
   margin: 0px auto;
 }
-.twoCharts img {
-  width: 100%;
+
+.twoCharts .allCombos, .comboDisplay {
+  margin: 0px auto;
+  width: 360px;
+  height: 368px;
+  border: 1px solid blue;
 }
 
 .singleChart {

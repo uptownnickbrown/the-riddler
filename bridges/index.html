@@ -68,14 +68,14 @@
         </div>
       </div>
       <p class='copy'>There are five bridges. That means that when the storm rolls through with a 50% chance of knocking out each bridge, there are 2<sup>5</sup> (32) possible combinations of bridges that survive the night.</p>
-      <p class='copy'>It's also easy to see there are only five unique paths that can take you to the south shore:</p>
+      <p class='copy'>It's also easy to see there are only four unique paths that can take you to the south shore:</p>
       <div class='singleChart'>
         <div class='oneRowAnimated inset'>
           <div class='graphic'>
           </div>
         </div>
       </div>
-      <p class='copy'>If we label the paths a, b, c, d, and e as in the above image, we can list out every possible combination of surviving bridges, as well as every available path to shore to see the chance of success is exactly 50%:</p>
+      <p class='copy'>If we label the paths a, b, c, d, and e as in the above image, we can list out every possible combination of surviving bridges, as well as every available path to shore (a → d, a → c → e, b → e, b → c → d) to see the chance of success is exactly 50%:</p>
       <table class='resultTable'>
         <thead>
 
@@ -119,24 +119,21 @@
  <tr class="noPaths"> <td>None</td> <td>None</td> </tr>
 </tbody>
       </table>
-      <p class='copy'>Out of 32 possible combinations of surviving bridges, 16 scenarios have at least one surviving path from the north shore to the south. Where do we go from here?
+      <p class='copy'>Out of 32 possible combinations of surviving bridges, 16 scenarios have at least one surviving path from the north shore to the south.
     </section>
     <section id='question-1'>
-      <p class='copy'>Extrapolating that same strategy to two rows and three columns of islands gets a little trickier. There are 13 bridges, so there are 2<sup>13</sup>, or 8096 combinations or bridges that may survive until morning. And there are 29 unique working paths!</p>
+      <p class='copy'>Where do we go from here? Extrapolating that same strategy to two rows and three columns of islands gets a little trickier. There are 13 bridges, so there are 2<sup>13</sup>, or 8192 combinations or bridges that may survive until morning. And there are 29 unique working paths!</p>
       <div class='singleChart'>
         <div class='twoRowAnimated inset'>
           <div class='graphic'>
           </div>
         </div>
       </div>
-      <p class='copy'>Rather than list all 8,096 combinations out, I'll let you explore. At left are the possible outcomes — mouse over or click a scenario to see the outcome on the right. Green squares have 1 or more paths availables, while red squares leave you trapped
-        on the north shore:</p>
+      <p class='copy'>Rather than list all 8192 combinations out, I'll let you explore. At left are the possible outcomes — click on a cell to see the outcome of that scenario on the right. Green squares have 1 or more paths available, while red squares leave you trapped on the north shore:</p>
       <div class='twoCharts'>
-        <div class='inset allCombos'>
-          <img src='bridges.png'>
+        <div class='allCombos'>
         </div>
-        <div class='inset oneRow'>
-          <img src='bridges.png'>
+        <div class='comboDisplay'>
         </div>
       </div>
     </section>

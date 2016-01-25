@@ -159,6 +159,7 @@ var drawGraph = function($targetElement, graph, path) {
     nodeCount += 1;
   }
 
+  svgString += '</svg>';
   $targetElement.html(svgString);
 
   // return the graph chain methods on it
@@ -252,12 +253,111 @@ var runBulkTrial = function (totalRows, totalCols, failureRate, numTrials, $targ
 
 // TODO make this work dynamically on the graph provided in
 var addLabels = function($targetedChart) {
-  console.log('trying to add labels');
-  console.log($targetedChart);
-    var labels = '<text x="132" y="115" font-size="22" fill="#333333">a</text><text x="276" y="115" font-size="22" fill="#333333">b</text><text x="198" y="147" font-size="22" fill="#333333">c</text><text x="132" y="200" font-size="22" fill="#333333">d</text><text x="276" y="200" font-size="22" fill="#333333">e</text>';
+  var labels = '<text x="132" y="115" font-size="22" fill="#333333">a</text><text x="276" y="115" font-size="22" fill="#333333">b</text><text x="198" y="147" font-size="22" fill="#333333">c</text><text x="132" y="200" font-size="22" fill="#333333">d</text><text x="276" y="200" font-size="22" fill="#333333">e</text>';
   $(labels).appendTo($targetedChart.children('svg'));
   $targetedChart.html($targetedChart.html());
 };
+
+var gridOfResults = function() {
+  var $render = $('.allCombos');
+  var svgString = '<svg width="' + $('.allCombos').width() + '" height="' + $('.allCombos').height() + '" viewBox="0 0 ' +  $('.allCombos').width() + ' ' + $('.allCombos').height()  + '" xmlns="http://www.w3.org/2000/svg">';
+
+  var totalRows = 2;
+  var totalCols = 3;
+
+  var bridges = {
+  	'a':1,
+  	'b':1,
+  	'c':1,
+  	'd':1,
+  	'e':1,
+  	'f':1,
+  	'g':1,
+  	'h':1,
+  	'i':1,
+  	'j':1,
+  	'k':1,
+  	'l':1,
+  	'm':1
+  };
+
+  var paths = [
+  	'afk',
+  	'afil',
+  	'afijm',
+  	'afigehm',
+  	'adgik',
+  	'adgl',
+  	'adgjm',
+  	'adehm',
+  	'adehjl',
+  	'adehjik',
+  	'bdfk',
+  	'bdfil',
+  	'bdfijm',
+  	'bgl',
+  	'bgik',
+  	'bgjm',
+  	'behm',
+  	'behjl',
+  	'behjik',
+  	'chm',
+  	'chjl',
+  	'chjik',
+  	'chjgdfk',
+  	'cegjm',
+  	'cegl',
+  	'cegik',
+  	'cedfk',
+  	'cedfil',
+  	'cedfijm'
+  ];
+
+  var counter = 0;
+
+  var canCross = 0,
+  	noCross = 0;
+
+  while (counter < 8196) {
+  	var resultString = (counter >>> 0).toString(2);
+  	while (resultString.length < 13) {
+  		resultString = '0' + resultString;
+  	}
+
+  	var results = resultString.split('');
+
+  	var bridgeKeys = Object.keys(bridges),
+  		trialBridges = bridges;
+
+  	var i = 0;
+  	while (i < 13) {
+  		trialBridges[bridgeKeys[i]] = results[i];
+  		i += 1;
+  	}
+
+  	var goodPaths = paths.filter(function(path){
+  		var bridgesPresent = path.split('').filter(function(bridge){
+  			return trialBridges[bridge] == 1;
+  		});
+  		return path.length == bridgesPresent.length;
+  	});
+
+    var horizontalCount = (counter % 90) * 4;
+    var vertCount = Math.floor(counter / 90) * 4;
+
+  	if (goodPaths.length > 0) {
+  		canCross += 1;
+      svgString += '<rect x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#64B464" />';
+  	} else {
+      svgString += '<rect x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#F06464" />';
+  		noCross += 1;
+  	}
+  	counter += 1;
+  }
+  svgString += '</svg>';
+  $render.html(svgString);
+};
+
 
 $(document).ready(function() {
 
@@ -269,6 +369,8 @@ $(document).ready(function() {
   drawGraph($('.singleChart .oneRowAnimated .graphic'), newGraph(1,2));
   addLabels($('.singleChart .oneRowAnimated .graphic'));
   drawGraph($('.singleChart .twoRowAnimated .graphic'), newGraph(2,3));
+
+  gridOfResults();
 
   // Set up button handlers
   function setupButtons() {
