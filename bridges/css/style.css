@@ -243,14 +243,15 @@ blockquote a {
 }
 
 .singleChart {
-  width:400px;
+  width:600px;
   margin: 0px auto;
 }
 
-.singleChart img {
-  width: 100%;
+.singleChart .inset .graphic{
+  width:400px;
+  margin: 0px auto;
+  height:300px;
 }
-
 
 /* Live Results */
 

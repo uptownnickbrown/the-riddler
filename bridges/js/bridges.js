@@ -250,13 +250,25 @@ var runBulkTrial = function (totalRows, totalCols, failureRate, numTrials, $targ
 	return results.filter(function(result){return result.length > 0}).length / numTrials;
 };
 
+// TODO make this work dynamically on the graph provided in
+var addLabels = function($targetedChart) {
+  console.log('trying to add labels');
+  console.log($targetedChart);
+    var labels = '<text x="132" y="115" font-size="22" fill="#333333">a</text><text x="276" y="115" font-size="22" fill="#333333">b</text><text x="198" y="147" font-size="22" fill="#333333">c</text><text x="132" y="200" font-size="22" fill="#333333">d</text><text x="276" y="200" font-size="22" fill="#333333">e</text>';
+  $(labels).appendTo($targetedChart.children('svg'));
+  $targetedChart.html($targetedChart.html());
+};
+
 $(document).ready(function() {
 
   drawGraph($('.zeroRow .graphic'), newGraph(0,1));
-  drawGraph($('.oneRow .graphic'), newGraph(1,2));
+  drawGraph($('.threeCharts .oneRow .graphic'), newGraph(1,2));
   drawGraph($('.twoRow .graphic'), newGraph(2,3));
 
-
+  drawGraph($('.singleChart .oneRow .graphic'), newGraph(1,2));
+  drawGraph($('.singleChart .oneRowAnimated .graphic'), newGraph(1,2));
+  addLabels($('.singleChart .oneRowAnimated .graphic'));
+  drawGraph($('.singleChart .twoRowAnimated .graphic'), newGraph(2,3));
 
   // Set up button handlers
   function setupButtons() {
@@ -273,9 +285,9 @@ $(document).ready(function() {
       $('.zeroRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
     });
 
-    $('.oneRow .goRedo').click(function(e) {
-      var result = runBulkTrial(1,2,.5,1000, $('.oneRow .graphic'));
-      $('.oneRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
+    $('.threeCharts .oneRow .goRedo').click(function(e) {
+      var result = runBulkTrial(1,2,.5,1000, $('.threeCharts .oneRow .graphic'));
+      $('.threeCharts .oneRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
     });
 
     $('.twoRow .goRedo').click(function(e) {

@@ -35,7 +35,7 @@
     </section>
     <section id='simplify'>
       <p class='copy'>When tackling a problem like <a target="_blank"  href="https://twitter.com/ollie">Ollie Roeder's</a> latest Riddler, I like to start by breaking it down into a simpler problem. If the question is about a river with six islands arranged in two rows and three columns, what
-        is the answer for a river with no islands? For one row and two columns of islands? Take a look at at these diagrams below and click to simulate 10000 runs through each scenario:</p>
+        is the answer for a river with no islands? For one row and two columns of islands? Take a look at at these diagrams below and click to simulate 1000 runs through each scenario:</p>
       <div class='threeCharts'>
         <div class='inset zeroRow'>
             <div class='graphic'>
@@ -59,166 +59,74 @@
             </div>
         </div>
       </div>
-      <p class='copy'>Certainly seems like regardless of how many rows / columns we've got, the answer trends towards a 50% chance you'll be able to cross the river in the morning. How can we confirm that?</p>
+      <p class='copy'>It certainly seems that regardless of how many rows and columns we've got, the answer trends towards a 50% chance you'll be able to cross the river in the morning. How can we confirm that?</p>
       <p class='copy'>Let's take the slightly easier case of a river with just two islands in it:</p>
       <div class='singleChart'>
-        <div class='inset oneRow'>
-          <img src='bridges.png'>
+        <div class='oneRow inset'>
+          <div class='graphic'>
+          </div>
         </div>
       </div>
-      <p class='copy'>There are five bridges. That means that when the storm rolls through with a 50% chance of knocking out each bridge,there are 2<sup>5</sup> (32) possible combinations of bridges that survive the night.</p>
+      <p class='copy'>There are five bridges. That means that when the storm rolls through with a 50% chance of knocking out each bridge, there are 2<sup>5</sup> (32) possible combinations of bridges that survive the night.</p>
       <p class='copy'>It's also easy to see there are only five unique paths that can take you to the south shore:</p>
       <div class='singleChart'>
-        <div class='inset oneRow simulatePaths'>
-          <img src='bridges.png'>
+        <div class='oneRowAnimated inset'>
+          <div class='graphic'>
+          </div>
         </div>
       </div>
-      <p class='copy'>If we label the paths a, b, c, d, and e as in the above image, it's easy enough to list out every peossible combination of surviving bridges vs. every available path to see the chance of success is 50%:</p>
+      <p class='copy'>If we label the paths a, b, c, d, and e as in the above image, we can list out every possible combination of surviving bridges, as well as every available path to shore to see the chance of success is exactly 50%:</p>
       <table class='resultTable'>
         <thead>
-          <tr>
+
+ <tr>
             <th>Working Bridges</th>
             <th>Available Paths</th>
           </tr>
         </thead>
         <tbody class="pathResults">
-          <tr class="noPaths">
-            <td>None</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>e</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>d</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>d, e</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>c</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>c, e</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>c, d</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>c, d, e</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>b</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>b, e</td>
-            <td>b → e</td>
-          </tr>
-          <tr class="noPaths">
-            <td>b, d</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>b, d, e</td>
-            <td>b → e</td>
-          </tr>
-          <tr class="noPaths">
-            <td>b, c</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>b, c, e</td>
-            <td>b → e</td>
-          </tr>
-          <tr>
-            <td>b, c, d</td>
-            <td>b → c → d</td>
-          </tr>
-          <tr>
-            <td>b, c, d, e</td>
-            <td>b → e, b → c → d</td>
-          </tr>
-          <tr class="noPaths">
-            <td>a</td>
-            <td>None</td>
-          </tr>
-          <tr class="noPaths">
-            <td>a, e</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>a, d</td>
-            <td>a → d</td>
-          </tr>
-          <tr>
-            <td>a, d, e</td>
-            <td>a → d</td>
-          </tr>
-          <tr class="noPaths">
-            <td>a, c</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>a, c, e</td>
-            <td>a → c → e</td>
-          </tr>
-          <tr>
-            <td>a, c, d</td>
-            <td>a → d</td>
-          </tr>
-          <tr>
-            <td>a, c, d, e</td>
-            <td>a → d, a → c → e</td>
-          </tr>
-          <tr class="noPaths">
-            <td>a, b</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>a, b, e</td>
-            <td>b → e</td>
-          </tr>
-          <tr>
-            <td>a, b, d</td>
-            <td>a → d</td>
-          </tr>
-          <tr>
-            <td>a, b, d, e</td>
-            <td>a → d, b → e</td>
-          </tr>
-          <tr class="noPaths">
-            <td>a, b, c</td>
-            <td>None</td>
-          </tr>
-          <tr>
-            <td>a, b, c, e</td>
-            <td>a → c → e, b → e</td>
-          </tr>
-          <tr>
-            <td>a, b, c, d</td>
-            <td>a → d, b → c → d</td>
-          </tr>
-          <tr>
-            <td>a, b, c, d, e</td>
-            <td>a → d, a → c → e, b → e, b → c → d</td>
-          </tr>
-        </tbody>
+          <tr> <td>a, b, c, d, e</td> <td>a → d, a → c → e, b → e, b → c → d</td> </tr>
+          <tr> <td>a, b, c, d</td> <td>a → d, b → c → d</td> </tr>
+          <tr> <td>a, b, c, e</td> <td>a → c → e, b → e</td> </tr>
+          <tr> <td>a, b, d, e</td> <td>a → d, b → e</td> </tr>
+          <tr> <td>a, c, d, e</td> <td>a → d, a → c → e</td> </tr>
+          <tr> <td>b, c, d, e</td> <td>b → e, b → c → d</td> </tr>
+          <tr> <td>a, b, d</td> <td>a → d</td> </tr>
+          <tr> <td>a, c, e</td> <td>a → c → e</td> </tr>
+          <tr> <td>a, c, d</td> <td>a → d</td> </tr>
+          <tr> <td>a, d, e</td> <td>a → d</td> </tr>
+          <tr> <td>a, b, e</td> <td>b → e</td> </tr>
+          <tr> <td>b, c, d</td> <td>b → c → d</td> </tr>
+          <tr> <td>b, d, e</td> <td>b → e</td> </tr>
+          <tr> <td>b, c, e</td> <td>b → e</td> </tr>
+          <tr> <td>a, d</td> <td>a → d</td> </tr>
+ <tr> <td>b, e</td> <td>b → e</td> </tr>
+ <tr class="noPaths"> <td>a, b, c</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>c, d, e</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>a, b</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>a, c</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>a, e</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>b, c</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>b, d</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>c, e</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>c, d</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>d, e</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>a</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>b</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>c</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>d</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>e</td> <td>None</td> </tr>
+ <tr class="noPaths"> <td>None</td> <td>None</td> </tr>
+</tbody>
       </table>
       <p class='copy'>Out of 32 possible combinations of surviving bridges, 16 scenarios have at least one surviving path from the north shore to the south. Where do we go from here?
     </section>
     <section id='question-1'>
-      <p class='copy'>Extrapolating that to two rows and three columns of islands gets a little trickier. There are 13 bridges, so there are 2<sup>13</sup>, or 8096 combinations or bridges that may survive until morning. And there are 29 unique wiorking paths:</p>
+      <p class='copy'>Extrapolating that same strategy to two rows and three columns of islands gets a little trickier. There are 13 bridges, so there are 2<sup>13</sup>, or 8096 combinations or bridges that may survive until morning. And there are 29 unique working paths!</p>
       <div class='singleChart'>
-        <div class='inset oneRow simulatePaths'>
-          <img src='bridges.png'>
+        <div class='twoRowAnimated inset'>
+          <div class='graphic'>
+          </div>
         </div>
       </div>
       <p class='copy'>Rather than list all 8,096 combinations out, I'll let you explore. At left are the possible outcomes — mouse over or click a scenario to see the outcome on the right. Green squares have 1 or more paths availables, while red squares leave you trapped
@@ -245,89 +153,110 @@
           </div>
           <table class='resultTable'>
             <thead>
-              <tr>
+
+ <tr>
                 <th># of rows of Islands (N)</th>
                 <th>Chance of Crossing</th>
               </tr>
             </thead>
             <tbody class="simulationResults">
-              <tr>
+
+ <tr>
                 <td>1</td>
                 <td class="liveResult">???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>2</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>3</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>4</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>5</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>6</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>7</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>8</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>9</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>10</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>11</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>12</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>13</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>14</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>15</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>16</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>17</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>18</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>19</td>
                 <td>???</td>
               </tr>
-              <tr>
+
+ <tr>
                 <td>20</td>
                 <td>???</td>
               </tr>
