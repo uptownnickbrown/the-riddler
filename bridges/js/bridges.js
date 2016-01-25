@@ -82,13 +82,32 @@ var drawGraph = function($targetElement, graph, path) {
   var totalRows = g.totalRows,
       totalCols = g.totalCols;
 
-  var width = $targetElement.width();
-  var height = $targetElement.height();
+  var fullWidth = $targetElement.width();
+  var width = $targetElement.width() * .9;
+  var fullHeight = $targetElement.height();
+  var height = $targetElement.height() * .9;
+  var xOffset = width * .05;
+  var yOffset = width * .05;
 
-  var svgString = '<svg width="' + width + '" height="' + height + '" viewBox="0 0 ' + width + ' ' + height + '" xmlns="http://www.w3.org/2000/svg">';
-  svgString += '<rect x="0" y="0" width="' + width + '" height="' + height + '" fill="#ECECEC" />';
-  svgString += '<rect x="0" y="0" width="' + width + '" height="10" fill="#ED6F39" />';
-  svgString += '<rect x="0" y="' + height + '" width="' + width + '" height="10" fill="#ED6F39" />';
+  var nodeWidth = width / (5 + totalCols + (totalCols - 1) * 2);
+  var nodeHeight = height / (7 + totalRows + (totalRows - 1) * 2);
+  var nodeSize = nodeWidth < nodeHeight ? nodeWidth : nodeHeight;
+      nodeSize = height * .15 > nodeSize ? nodeSize : height * .15;
+  var lineWidth = nodeSize / 7;
+
+  var northShoreLine = yOffset + nodeSize * 2;
+  var southShoreLine = (yOffset + height - (nodeSize * 2));
+  var vertBridgeLength = (southShoreLine - northShoreLine  - totalRows * nodeSize) / (totalRows + 1);
+
+  // Setup the background and north / south shores
+  var svgString = '<svg width="' + fullWidth + '" height="' + fullHeight + '" viewBox="0 0 ' + fullWidth + ' ' + fullHeight + '" xmlns="http://www.w3.org/2000/svg">';
+  svgString += '<rect x="' + xOffset + '" y="' + yOffset + '" width="' + width + '" height="' + height + '" fill="#ECECEC" />';
+  svgString += '<rect x="' + xOffset + '" y="' + yOffset + '" width="' + width + '" height="' + nodeSize * 2 + '" fill="#ED6F39" />';
+  svgString += '<rect x="' + xOffset + '" y="' + southShoreLine + '" width="' + width + '" height="' + nodeSize * 2 + '" fill="#ED6F39" />';
+
+  if (totalRows == 0) {
+    svgString += '<line x1="' + (fullWidth / 2) + '" y1="' + northShoreLine + '" x2="' + (fullWidth / 2) + '" y2="' + southShoreLine + '" stroke="#ED6F39" stroke-width="' + lineWidth + '"/>';
+  }
 
   var i = 0,
       j = 0;
@@ -100,14 +119,14 @@ var drawGraph = function($targetElement, graph, path) {
         // top row
         if (i == 0) {
           if (g.hasEdge('northShore', nodeCount)) {
-              // vertical line to first node
-              svgString += '<line x1="85" y1="20" x2="85" y2="120" stroke="#ED6F39" stroke-width="2"/>';
+              // vertical line to node
+              svgString += '<line x1="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1))) + '" y1="' + northShoreLine + '" x2="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1)))  + '" y2="' + (northShoreLine + vertBridgeLength) + '" stroke="#ED6F39" stroke-width="' + lineWidth + '"/>';
           }
           j += 1;
           nodeCount += 1;
         } else {
           if (g.hasEdge(nodeCount - totalCols, nodeCount)) {
-            svgString += '<line x1="85" y1="20" x2="85" y2="120" stroke="#ED6F39" stroke-width="2"/>';
+            svgString += '<line x1="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1))) + '" y1="' + ((i / 2) * (vertBridgeLength + nodeSize) + northShoreLine) + '" x2="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1)))  + '" y2="' + ((i / 2) * (vertBridgeLength + nodeSize) + northShoreLine + vertBridgeLength) + '" stroke="#ED6F39" stroke-width="' + lineWidth + '"/>';
           }
           j += 1;
           nodeCount += 1;
@@ -117,11 +136,11 @@ var drawGraph = function($targetElement, graph, path) {
     } else {
       var j = 0;
       while (j < totalCols) {
-        // node
-        svgString += '<rect x="100" y="60" width="20" height="20" fill="#ED6F39" />';
+        // draw node
+        svgString += '<rect x="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1)) - nodeSize / 2) + '" y="' + (((i-1) / 2) * (vertBridgeLength + nodeSize) + vertBridgeLength + northShoreLine) + '" width="' + nodeSize + '" height="' + nodeSize + '" fill="#ED6F39" />';
         if (g.hasEdge(nodeCount, nodeCount + 1)) {
           // horizontal line between nodes
-          svgString += '<line x1="85" y1="20" x2="85" y2="120" stroke="#ED6F39" stroke-width="2"/>';
+          svgString += '<line x1="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1)) + nodeSize / 2) + '" y1="' + (((i-1) / 2) * (vertBridgeLength + nodeSize) + vertBridgeLength + northShoreLine + .5 * nodeSize) + '" x2="' + (xOffset + (((j+1) * 2) + 1.5) * (width / ((totalCols * 2) + 1)) - nodeSize / 2) + '" y2="' + (((i-1) / 2) * (vertBridgeLength + nodeSize) + vertBridgeLength + northShoreLine  + .5 * nodeSize) + '" stroke="#ED6F39" stroke-width="' + lineWidth + '"/>';
         }
         j += 1;
         nodeCount += 1;
@@ -134,15 +153,13 @@ var drawGraph = function($targetElement, graph, path) {
   while (j < totalCols) {
     if (g.hasEdge(nodeCount, 'southShore')) {
       // vertical line to the bottom
-      svgString += '<line x1="85" y1="20" x2="85" y2="120" stroke="#ED6F39" stroke-width="2"/>';
+      svgString += '<line x1="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1))) + '" y1="' + ((i / 2) * (vertBridgeLength + nodeSize) + northShoreLine) + '" x2="' + (xOffset + ((j * 2) + 1.5) * (width / ((totalCols * 2) + 1)))  + '" y2="' + southShoreLine + '" stroke="#ED6F39" stroke-width="' + lineWidth + '"/>';
     }
     j += 1;
     nodeCount += 1;
   }
 
-  console.log(svgString);
-
-  $targetElement.append(svgString);
+  $targetElement.html(svgString);
 
   // return the target element, so you can jQuery method chain it
   return $targetElement;
@@ -213,8 +230,9 @@ var analyzeGraph = function(g) {
 
 $(document).ready(function() {
 
-  drawGraph($('.zeroRow .graphic'), newGraph(2,3));
-
+  drawGraph($('.zeroRow .graphic'), newGraph(0,1));
+  drawGraph($('.oneRow .graphic'), newGraph(1,2));
+  drawGraph($('.twoRow .graphic'), newGraph(2,3));
 
   // Set up button handlers
   function setupButtons() {
