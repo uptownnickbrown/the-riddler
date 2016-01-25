@@ -1,8 +1,8 @@
 var graphlib = require('graphlib');
 var Heap = require('heap');
 
-var totalRows = 2;
-var totalCols = 3;
+var totalRows = 50;
+var totalCols = 50;
 
 var g = new graphlib.Graph({ directed: false, compound: false, multigraph: false});
 

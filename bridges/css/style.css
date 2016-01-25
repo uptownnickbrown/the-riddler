@@ -1,0 +1,338 @@
+/* General styles */
+
+body {
+    font-family: Roboto, Helvetica, Arial;
+    font-size: .9em;
+    color: #333;
+    margin: 0;
+}
+
+.mainContainer {
+    width:100%;
+    min-width:720px;
+	margin: 0 auto;
+}
+
+section {
+	margin: 0 auto;
+}
+
+header {
+    width: 100%;
+    height: 90px;
+    background-color: #5799db;
+    clear: both;
+    min-width:720px;
+}
+footer {
+    height: 30px;
+    background-color: #5799db;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    border-top: 2px solid white;
+}
+
+.tenRunTrial {
+	background: #efefff;
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 25px;
+}
+
+/* Fun Buttons */
+
+.button {
+    width: 140px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
+    border-radius: 8px;
+    font-family: Roboto, Helvetica, Arial;
+    font-size: 1.4em;
+    background-color: #5799db;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+        border: 0;
+        cursor: pointer;
+        overflow: visible;
+        padding: 0;
+        -webkit-appearance: button; /* for input */
+        -webkit-user-select: none; /* for button */
+           -moz-user-select: none;
+            -ms-user-select: none;
+}
+
+
+.buttonBank {
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+  display: inline-block;
+}
+
+
+@-webkit-keyframes pulse {
+  0% { background-color: #5799db; -webkit-transform:rotate(0deg); transform:rotate(0deg); width: 140px;}
+  1% { background-color: #5799db; -webkit-transform:rotate(5deg); transform:rotate(5deg);}
+  2% { -webkit-transform:rotate(-4deg); transform:rotate(-4deg);}
+  3% { background-color: #59b1f0; -webkit-transform:rotate(3deg); transform:rotate(3deg); width: 160px;}
+  4% { -webkit-transform:rotate(-2deg); transform:rotate(-2deg);}
+  5% { background-color: #5799db; -webkit-transform:rotate(0deg);  transform:rotate(0deg); width: 140px;}
+}
+
+
+a.button.goAgain {
+  -webkit-animation-name: pulse;
+  -moz-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-duration: 15s;
+  -moz-animation-duration: 15s;
+  animation-duration: 15s;
+  -webkit-animation-iteration-count: infinite;
+  -moz-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+}
+
+.goAgain:hover {
+	-webkit-animation: pulse 15s 1;
+	-moz-animation: pulse 15s 1;
+	animation: pulse 15s 1;
+}
+
+
+/* Typography */
+
+blockquote {
+  box-sizing:border-box;
+  border-left: 3px solid #999;
+  padding-left:25px;
+}
+
+blockquote, .copy, label, output {
+    font-family: Roboto, Helvetica, Arial;
+    vertical-align: middle;
+    text-align: left;
+    margin: 25px auto;
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 1.7em;
+        max-width:1024px;
+        width:80%;
+        text-decoration: none;
+}
+
+.copy a {
+      text-decoration: none;
+      color: #5799db;
+}
+
+.buttonBank .copy {
+	vertical-align: baseline;
+}
+
+.sliderBank {
+	display: block;
+	margin: 25px auto;
+	text-align: center;
+}
+
+.explore {
+	margin-bottom: 100px;
+}
+
+h1 {
+    font-family: Roboto, Helvetica, Arial;
+    line-height: 60px;
+    vertical-align: middle;
+    font-size: 3.2em;
+    text-align: center;
+    margin: 0 0 0 0;
+    color: #fff;
+    font-weight: 500;
+}
+h3 {
+    font-family: Roboto, Helvetica, Arial;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+}
+.twitter {
+    color: #fff;
+    text-decoration: none;
+}
+
+.copy .twitter {
+  color: #5799db;
+}
+
+blockquote a {
+  color: #5799db;
+  text-decoration:none;
+}
+
+.copyright {
+    text-align: right;
+    line-height: 3px;
+    color: #fff;
+    font-family: Roboto, Helvetica, Arial;
+    padding-right: 15px;
+}
+
+/* Bridge charts */
+.introChart {
+  width:400px;
+  margin: 0px auto;
+}
+
+.introChart img {
+  width: 100%;
+}
+
+.threeCharts {
+  width:600px;
+  margin: 0px auto;
+  display:flex;
+}
+
+.threeCharts .inset {
+  width:180px;
+  margin: 0px auto;
+}
+.threeCharts img {
+  width: 100%;
+}
+
+.twoCharts {
+  width:80%;
+  max-width: 900px;
+  min-width:700px;
+  margin: 0px auto;
+  display:flex;
+}
+
+.twoCharts .inset {
+  width:340px;
+  margin: 0px auto;
+}
+.twoCharts img {
+  width: 100%;
+}
+
+.singleChart {
+  width:400px;
+  margin: 0px auto;
+}
+
+.singleChart img {
+  width: 100%;
+}
+
+
+/* Live Results */
+
+
+/* Table styles */
+.resultTable {
+    margin: 30px auto;
+    font-family: Roboto, Helvetica, Arial;
+    font-size: 1.3em;
+    border-spacing: 0px;
+    width: 80%;
+    font-weight: 300;
+}
+
+.resultTable td {
+    padding: 6px 6px 6px 6px;
+}
+.resultTable th {
+    font-size: 1.1em;
+    padding: 6px 2px 6px 2px;
+    font-weight: 400;
+}
+.resultTable tr {
+    margin-bottom: .5em;
+}
+
+thead tr {
+    background-color: #5799db;
+    color: #fff;
+}
+thead tr th:first-child {
+    border-top-left-radius: 8px;
+    padding-left: 6px;
+}
+thead tr th:last-child {
+    border-top-right-radius: 8px;
+    padding-right: 6px;
+}
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+th, td {
+    text-align: center;
+
+}
+
+.pathResults tr {
+  background-color:rgb(100, 180, 100);
+}
+
+.pathResults .noPaths {
+  background-color: rgb(240, 100, 100);
+}
+
+.simulationResults tr:nth-child(odd) {
+    background-color: #eee;
+}
+.simulationResults tr:nth-child(even) {
+    background-color: #ccc;
+}
+
+/* Live Results */
+.liveResult {
+	color: #e85034;
+	font-weight: 300;
+	transition: all 0.5s ease-out;
+}
+
+/* Media Queries have to come last */
+
+@media screen and (max-width: 1260px) {
+
+
+}
+
+@media screen and (max-width: 1100px) {
+
+}
+
+@media screen and (max-width: 900px) {
+
+}
+
+@media screen and (max-width: 600px) {
+
+}
+
+@media screen and (max-width: 420px) {
+    h1 {
+        font-size: 2.4em;
+        line-height: 40px;
+    }
+    h3 {
+        font-size: 1em;
+    }
+    header {
+        height: 70px;
+    }
+}

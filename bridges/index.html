@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <script src="./js/jquery-1.9.1.js"></script>
+  <script src="./js/d3.v3.min.js"></script>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/bridges.js"></script>
+  <title>Night Falls. A Storm Rolls In. Can A Simulation Help You Cross The River?</title>
+</head>
+
+<body>
+  <header>
+    <h1>Can You Cross The River?</h1>
+    <h3>
+      <a class='twitter' href="https://twitter.com/uptownnickbrown">@uptownnickbrown</a>
+    </h3>
+  </header>
+  <div class='mainContainer'>
+    <section class='intro'>
+      <blockquote>
+        You’re on the north shore of a river, and want to cross to the south, via a series of 13 bridges and six islands, which you can see in the diagram below. But, as you approach the water, night falls, a bad storm rolls in, and you’re forced to wait until
+        morning to try to cross. Overnight, the storm could render some of the bridges unusable — it has a 50 percent chance of knocking out each of the bridges. (The chance is independent for each bridge.)
+        <p>Source: <a href="http://fivethirtyeight.com/features/night-falls-a-storm-rolls-in-can-you-cross-the-river/">FiveThirtyEight</a></p>
+      </blockquote>
+      <div class='introChart'>
+        <img src='bridges.png'>
+      </div>
+      <blockquote>
+        Question 1: What’s the probability you will be able to cross the river in the morning? (You have no boat, can’t swim, can’t fix the bridges, etc. No tricks.)
+      </blockquote>
+    </section>
+    <section class='simplify'>
+      <p class='copy'>When tackling a problem like <a href="https://twitter.com/ollie">Ollie Roeder's</a> latest Riddler, I like to start by breaking it down into a simpler problem. If the question is about a river with 6 islands arranged in 2 rows / 3 columns, what
+        is the answer for no islands? For 1 row / 2 columns of islands? Take a look at at these diagrams below and click to simulate 10,000 results of the scenario:</p>
+      <div class='threeCharts'>
+        <div class='inset zeroRow'>
+          <img src='bridges.png'>
+        </div>
+        <div class='inset oneRow'>
+          <img src='bridges.png'>
+        </div>
+        <div class='inset twoRow'>
+          <img src='bridges.png'>
+        </div>
+      </div>
+      <p class='copy'>Certainly seems like regardless of how many rows / columns we've got, the answer trends towards a 50% chance you'll be able to cross the river in the morning. How can we confirm that?</p>
+      <p class='copy'>Let's take the slightly easier case of a river with just two islands in it:</p>
+      <div class='singleChart'>
+        <div class='inset oneRow'>
+          <img src='bridges.png'>
+        </div>
+      </div>
+      <p class='copy'>There are five bridges. That means that when the storm rolls through with a 50% chance of knocking out each bridge,there are 2<sup>5</sup> (32) possible combinations of bridges that survive the night.</p>
+      <p class='copy'>It's also easy to see there are only five unique paths that can take you to the south shore:</p>
+      <div class='singleChart'>
+        <div class='inset oneRow simulatePaths'>
+          <img src='bridges.png'>
+        </div>
+      </div>
+      <p class='copy'>If we label the paths a, b, c, d, and e as in the above image, it's easy enough to list out every peossible combination of surviving bridges vs. every available path to see the chance of success is 50%:</p>
+      <table class='resultTable'>
+        <thead>
+          <tr>
+            <th>Working Bridges</th>
+            <th>Available Paths</th>
+          </tr>
+        </thead>
+        <tbody class="pathResults">
+          <tr class="noPaths">
+            <td>None</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>e</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>d</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>d, e</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>c</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>c, e</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>c, d</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>c, d, e</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>b</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>b, e</td>
+            <td>b → e</td>
+          </tr>
+          <tr class="noPaths">
+            <td>b, d</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>b, d, e</td>
+            <td>b → e</td>
+          </tr>
+          <tr class="noPaths">
+            <td>b, c</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>b, c, e</td>
+            <td>b → e</td>
+          </tr>
+          <tr>
+            <td>b, c, d</td>
+            <td>b → c → d</td>
+          </tr>
+          <tr>
+            <td>b, c, d, e</td>
+            <td>b → e, b → c → d</td>
+          </tr>
+          <tr class="noPaths">
+            <td>a</td>
+            <td>None</td>
+          </tr>
+          <tr class="noPaths">
+            <td>a, e</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>a, d</td>
+            <td>a → d</td>
+          </tr>
+          <tr>
+            <td>a, d, e</td>
+            <td>a → d</td>
+          </tr>
+          <tr class="noPaths">
+            <td>a, c</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>a, c, e</td>
+            <td>a → c → e</td>
+          </tr>
+          <tr>
+            <td>a, c, d</td>
+            <td>a → d</td>
+          </tr>
+          <tr>
+            <td>a, c, d, e</td>
+            <td>a → d, a → c → e</td>
+          </tr>
+          <tr class="noPaths">
+            <td>a, b</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>a, b, e</td>
+            <td>b → e</td>
+          </tr>
+          <tr>
+            <td>a, b, d</td>
+            <td>a → d</td>
+          </tr>
+          <tr>
+            <td>a, b, d, e</td>
+            <td>a → d, b → e</td>
+          </tr>
+          <tr class="noPaths">
+            <td>a, b, c</td>
+            <td>None</td>
+          </tr>
+          <tr>
+            <td>a, b, c, e</td>
+            <td>a → c → e, b → e</td>
+          </tr>
+          <tr>
+            <td>a, b, c, d</td>
+            <td>a → d, b → c → d</td>
+          </tr>
+          <tr>
+            <td>a, b, c, d, e</td>
+            <td>a → d, a → c → e, b → e, b → c → d</td>
+          </tr>
+        </tbody>
+      </table>
+      <p class='copy'>Out of 32 possible combinations of surviving bridges, 16 scenarios have at least one surviving path from the north shore to the south. Where do we go from here?
+    </section>
+    <section class='question-1'>
+      <p class='copy'>Extrapolating that to two rows and three columns of islands gets a little trickier. There are 13 bridges, so there are 2<sup>13</sup>, or 8096 combinations or bridges that may survive until morning. And there are 29 unique wiorking paths:</p>
+      <div class='singleChart'>
+        <div class='inset oneRow simulatePaths'>
+          <img src='bridges.png'>
+        </div>
+      </div>
+      <p class='copy'>Rather than list all 8,096 combinations out, I'll let you explore. At left are the possible outcomes — mouse over or click a scenario to see the outcome on the right. Green squares have 1 or more paths availables, while red squares leave you trapped
+        on the north shore:</p>
+      <div class='twoCharts'>
+        <div class='inset allCombos'>
+          <img src='bridges.png'>
+        </div>
+        <div class='inset oneRow'>
+          <img src='bridges.png'>
+        </div>
+      </div>
+    </section>
+    <section class='question-2'>
+      <p class='copy'>Ok, we feel pretty good about the first question — you've got a 50% chance of making it across the river. What about the second question?</p>
+      <blockquote>
+        Question 2: What’s the probability you’ll be able to cross this river in the morning, after the same storm — with the same independent 50 percent chance of knocking out each bridge — rolls through?
+      </blockquote>
+      <p class='copy'>We've already shown that for N = 0, 1 or 2 the answer is 50%. It seems likely to hold steady for larger values of N as well. Let's simulate it. Click below to run 10,000 trials for 1
+        < N < 20:</p>
+          <div class="buttonBank">
+            <button class="button inline" title="Go">Go</button>
+            <button class="button goAgain" title="Go Again?!?">Go Again?</button>
+          </div>
+          <table class='resultTable'>
+            <thead>
+              <tr>
+                <th># of rows of Islands (N)</th>
+                <th>Chance of Crossing</th>
+              </tr>
+            </thead>
+            <tbody class="simulationResults">
+              <tr>
+                <td>1</td>
+                <td class="liveResult">???</td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>6</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>7</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>8</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>9</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>10</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>11</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>13</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>14</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>15</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>16</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>17</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>18</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>19</td>
+                <td>???</td>
+              </tr>
+              <tr>
+                <td>20</td>
+                <td>???</td>
+              </tr>
+            </tbody>
+          </table>
+          <p class='copy'>Unless you had some crazy outlying results in your simulation (in which case...run it again!) you'll see 50% is the answer to the generalized question for all values of N.</p>
+    </section>
+
+    <section class='explore'>
+      <p class='copy'>If you're like me you may be wondering, what makes this scenario special? Are the values of N rows, N + 1 columns and a 50% chance of overnight bridge failure special? I'm glad you asked — use the sandbox below to tweak the values and see what happens
+        for yourself!</p>
+      <div class='twoCharts'>
+        <div class='inset allCombos'>
+          <img src='bridges.png'>
+        </div>
+        <div class='inset oneRow'>
+          <img src='bridges.png'>
+        </div>
+      </div>
+      <p class='copy'>Find an interesting result? Enjoy this interactive article? Let me know <a class='twitter' href="https://twitter.com/uptownnickbrown">@uptownnickbrown on Twitter</a> or <a id='twitter' href="mailto:nick@quanticle.co">email me at nick@quanticle.co</a>.
+        Thanks!</p>
+
+    </section>
+  <footer>
+    <p class='copyright'><a class='twitter' href="https://twitter.com/uptownnickbrown">@uptownnickbrown</a>
+  </footer>
+</body>
+
+</html>
