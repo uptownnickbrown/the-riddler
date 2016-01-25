@@ -2,7 +2,6 @@
 var newGraph = function(totalRows, totalCols) {
   var totalRows = totalRows;
   var totalCols = totalCols;
-
   var g = new graphlib.Graph({
     directed: false,
     compound: false,
@@ -19,15 +18,16 @@ var newGraph = function(totalRows, totalCols) {
   var currentCol = 1; // col counter
   var nodeCount = totalRows * totalCols;
 
+  if (nodeCount == 0) {
+    g.setEdge("northShore", "southShore");
+    return g;
+  }
+
   // Make all the edges
   while (currentRow <= totalRows) {
     // reset counter after inner loop
     var currentCol = 1;
     while (currentCol <= totalCols) {
-      if (totalRows == 0) {
-        g.setEdge("northShore", "southShore");
-        break;
-      }
       var currentNodeId = ((nodeCount % totalCols) + currentCol) + (currentRow - 1) * totalCols;
       //console.log('working on node: ' + currentNodeId);
       if (currentRow == 1) {
@@ -105,7 +105,7 @@ var drawGraph = function($targetElement, graph, path) {
   svgString += '<rect x="' + xOffset + '" y="' + yOffset + '" width="' + width + '" height="' + nodeSize * 2 + '" fill="#ED6F39" />';
   svgString += '<rect x="' + xOffset + '" y="' + southShoreLine + '" width="' + width + '" height="' + nodeSize * 2 + '" fill="#ED6F39" />';
 
-  if (totalRows == 0) {
+  if (g.hasEdge('northShore', 'southShore')) {
     svgString += '<line x1="' + (fullWidth / 2) + '" y1="' + northShoreLine + '" x2="' + (fullWidth / 2) + '" y2="' + southShoreLine + '" stroke="#ED6F39" stroke-width="' + lineWidth + '"/>';
   }
 
@@ -161,8 +161,8 @@ var drawGraph = function($targetElement, graph, path) {
 
   $targetElement.html(svgString);
 
-  // return the target element, so you can jQuery method chain it
-  return $targetElement;
+  // return the graph chain methods on it
+  return g;
 };
 
 var nightPasses = function(g, failureRate) {
@@ -226,22 +226,28 @@ var analyzeGraph = function(g) {
   }
 };
 
-var runBulkTrial = function (totalRows, totalCols, failureRate, numTrials) {
-  var fail = failureRate || .5;
-  var trials = numTrials || 1000;
-	console.log('analyzing ' + totalRows + ' rows and ' + totalCols + ' columns, ' + numTrials + ' times with fail rate ' + failRate);
+var runBulkTrial = function (totalRows, totalCols, failureRate, numTrials, $targetElement) {
+  var failureRate = failureRate || .5;
+  var numTrials = numTrials || 1000;
+	console.log('analyzing ' + totalRows + ' rows and ' + totalCols + ' columns, ' + numTrials + ' times with fail rate ' + failureRate);
 
   var i = 0,
-		trials = numTrials,
 		results = [];
 
-	while (i < trials) {
-		results.push(analyzeGraph(nightPasses(newGraph(totalRows,totalCols),failureRate)));
+
+
+
+	while (i < numTrials) {
+    if ($targetElement && ((i+1) % numTrials == 0)) {
+      var g = drawGraph($targetElement,nightPasses(newGraph(totalRows,totalCols),failureRate));
+      results.push(analyzeGraph(g));
+    } else {
+      results.push(analyzeGraph(nightPasses(newGraph(totalRows,totalCols),failureRate)));
+    }
 		i += 1;
-		process.stdout.write(".");
 	}
 
-	return results.filter(function(result){return result.length > 0}).length / trials;
+	return results.filter(function(result){return result.length > 0}).length / numTrials;
 };
 
 $(document).ready(function() {
@@ -262,17 +268,22 @@ $(document).ready(function() {
         }
     });
 
-    $('.oneRow .goRedo').click(function() {
-      
+    $('.zeroRow .goRedo').click(function(e) {
+      var result = runBulkTrial(0,1,.5,1000, $('.zeroRow .graphic'));
+      $('.zeroRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
     });
 
-    $('.oneRow .goRedo').click(function() {
-      console.log('clicked!');
-      buildTenRunSection();
-      return false;
+    $('.oneRow .goRedo').click(function(e) {
+      var result = runBulkTrial(1,2,.5,1000, $('.oneRow .graphic'));
+      $('.oneRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
+    });
+
+    $('.twoRow .goRedo').click(function(e) {
+      var result = runBulkTrial(2,3,.5,1000, $('.twoRow .graphic'));
+      $('.twoRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
     });
   };
 
-  //setupButtons();
+  setupButtons();
 
 });
