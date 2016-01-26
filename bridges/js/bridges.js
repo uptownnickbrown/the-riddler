@@ -533,7 +533,7 @@ $(document).ready(function() {
           var $result = $($cells[1]);
 
           $result.addClass('liveResult');
-          var resultCount = runBulkTrial(n,(n+1),.5,1000);
+          var resultCount = runBulkTrial(n,(n+1),.5,100);
 
           $result.text(Math.round(resultCount * 10000) / 100);
           i += 1;
