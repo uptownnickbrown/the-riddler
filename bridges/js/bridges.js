@@ -218,6 +218,36 @@ var plannedNight = function(g, outcome) {
   return g;
 };
 
+var sampleLabeledRoad = function(g, paths) {
+  var validPaths = paths;
+
+  // a, b, c, d, e ==
+  // 1, 4, 3, 2, 5
+  // doy...TODO fix whatever causes this weird mapping shit
+  var keyMap = {
+    0: 'a',
+    1: 'd',
+    2: 'c',
+    3: 'b',
+    4: 'e'
+  };
+  var edges = g.edges();
+
+  var i = 0;
+
+  while (i < 5) { // these match the letter from valid path list or the keys from the keymap above
+
+    if ($.inArray(keyMap[i],validPaths) > -1) {
+      //console.log('keeping edge');
+    } else {
+      //console.log('removing edge: ' + edges[i]);
+      g.removeEdge(edges[i]);
+    }
+    i += 1;
+  }
+  return g;
+};
+
 var analyzeGraph = function(g) {
   // Huge props to http://www.redblobgames.com/pathfinding/a-star/introduction.html for the A* algo with early exit
   // Alternate simpler, but way slower approach uses built-in Dijkstra algo in graphlib
@@ -290,9 +320,22 @@ var runBulkTrial = function (totalRows, totalCols, failureRate, numTrials, $targ
 };
 
 // TODO make this work dynamically on the graph provided in
-var addLabels = function($targetedChart) {
-  var labels = '<text x="132" y="115" font-size="22" fill="#333333">a</text><text x="276" y="115" font-size="22" fill="#333333">b</text><text x="198" y="147" font-size="22" fill="#333333">c</text><text x="132" y="200" font-size="22" fill="#333333">d</text><text x="276" y="200" font-size="22" fill="#333333">e</text>';
-  $(labels).appendTo($targetedChart.children('svg'));
+var addLabels = function($targetedChart,activeLabels) {
+  var activeLabels = activeLabels || ['a','b','c','d','e'];
+
+  var labelStrings = {
+    'a': '<text x="132" y="120" font-size="22" fill="#333333">a</text>',
+    'b': '<text x="276" y="120" font-size="22" fill="#333333">b</text>',
+    'c': '<text x="190" y="147" font-size="22" fill="#333333">c</text>',
+    'd': '<text x="132" y="200" font-size="22" fill="#333333">d</text>',
+    'e': '<text x="276" y="200" font-size="22" fill="#333333">e</text>'
+  }
+
+  var labelOutput = activeLabels.map(function(path){
+    return labelStrings[path];
+  });
+
+  $(labelOutput.join('')).appendTo($targetedChart.children('svg'));
   $targetedChart.html($targetedChart.html());
 };
 
@@ -409,8 +452,16 @@ $(document).ready(function() {
   drawGraph($('.twoRow .graphic'), newGraph(2,3));
 
   drawGraph($('.singleChart .oneRow .graphic'), newGraph(1,2));
-  drawGraph($('.singleChart .oneRowAnimated .graphic'), newGraph(1,2));
-  addLabels($('.singleChart .oneRowAnimated .graphic'));
+
+  var paths = [['a','d'],['a','c','e'],['b','c','d'],['b','e']];
+
+  var i = 0;
+  setInterval(function() {
+    drawGraph($('.singleChart .oneRowAnimated .graphic'), sampleLabeledRoad(newGraph(1,2),paths[i % 4]));
+    addLabels($('.singleChart .oneRowAnimated .graphic'),paths[i % 4]);
+    i += 1;
+  },1500);
+
   drawGraph($('.singleChart .twoRowAnimated .graphic'), newGraph(2,3));
 
   gridOfResults();
