@@ -182,8 +182,6 @@ var nightPasses = function(g, failureRate) {
 
 var plannedNight = function(g, outcome) {
   var outcomes = outcome.split('');
-  console.log(outcomes);
-
   // a, b, c, d, e, f, g, h, i, j, k, l, m ==
   // 1, 4, 7, 3, 6, 2, 5, 8, 10, 12, 9, 13, 13
   // doy...
@@ -423,8 +421,8 @@ var gridOfResults = function() {
   		return path.length == bridgesPresent.length;
   	});
 
-    var horizontalCount = (counter % 90) * 4;
-    var vertCount = Math.floor(counter / 90) * 4;
+    var horizontalCount = (counter % 128) * 4;
+    var vertCount = Math.floor(counter / 128) * 6;
     var caseData = [];
 
     for(var i in trialBridges) {
@@ -433,9 +431,9 @@ var gridOfResults = function() {
 
     if (goodPaths.length > 0) {
   		canCross += 1;
-      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#64B464" />';
+      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="6" fill="#64B464" />';
   	} else {
-      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#F06464" />';
+      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="6" fill="#F06464" />';
   		noCross += 1;
   	}
   	counter += 1;
@@ -447,6 +445,7 @@ var gridOfResults = function() {
 
 $(document).ready(function() {
 
+  // Set up all persistent graphics
   drawGraph($('.zeroRow .graphic'), newGraph(0,1));
   drawGraph($('.threeCharts .oneRow .graphic'), newGraph(1,2));
   drawGraph($('.twoRow .graphic'), newGraph(2,3));
@@ -462,24 +461,18 @@ $(document).ready(function() {
     i += 1;
   },1500);
 
-  drawGraph($('.singleChart .twoRowAnimated .graphic'), newGraph(2,3));
 
-  gridOfResults();
-  $('.case').click(function(event){
-    var outcome = $(this).data('case') + '';
-    var focusGraph = newGraph(2,3);
-    focusGraph = plannedNight(focusGraph, outcome);
-    drawGraph($('.comboDisplay'),focusGraph);
-  });
-
+  // Set up all buttons
     $('.goRedo').click(function(){
         var $this = $(this);
         $this.toggleClass('again');
+        $this.removeClass('go');
         if($this.hasClass('again')){
             $this.text('Again?');
         }
     });
 
+    // Animated charts at the beginning
     $('.zeroRow .goRedo').click(function(e) {
       var animate = setInterval(function() {
         drawGraph($('.zeroRow .graphic'),nightPasses(newGraph(0,1)));
@@ -511,6 +504,95 @@ $(document).ready(function() {
         clearInterval(animate);
       },600);
       $('.twoRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
+    });
+
+    // Grid of all results for the 13 bridge scenario
+    gridOfResults();
+    $('.case').click(function(event){
+      $('.comboDisplay').height(350);
+      var outcome = $(this).data('case') + '';
+      var focusGraph = newGraph(2,3);
+      focusGraph = plannedNight(focusGraph, outcome);
+      drawGraph($('.comboDisplay'),focusGraph);
+    });
+
+    // Table of results at the end
+    $('#question-2 .goRedo').click(function(e) {
+      var $table = $('.simulationResults');
+      var rows = $table.children('tr');
+      //console.log('clicked!');
+      var i = 0;
+      var tableAnimation = setInterval(function() {
+        if (i < rows.length) {
+          var $row = $(rows[i]);
+          //console.log($row);
+          var $cells = $row.children('td');
+
+          var n = parseInt($($cells[0]).text());
+          var $result = $($cells[1]);
+
+          $result.addClass('liveResult');
+          var resultCount = runBulkTrial(n,(n+1),.5,1000);
+          $result.text(resultCount);
+          i += 1;
+        } else {
+          i += 1;
+          clearInterval(tableAnimation);
+        }
+      },100);
+    });
+
+    // Prep simulation
+    $('.slider').each(function(i,e) {
+      var $this = $(e);
+      var max = $this.children('.slider-input').attr('max');
+      var min = $this.children('.slider-input').attr('min');
+
+      $this.append('<div class = "min">' + min + '</div>');
+      $this.append('<div class = "max">' + max + '</div>');
+
+      $this.change(function(e){
+        console.log(e);
+        // update sim setting on slider change
+        var rows = parseInt($('.rowSlider input').val());
+        var cols = parseInt($('.colSlider input').val());
+        var failureRate = parseInt($('.bridgeSlider input').val());
+        $('.simulationTag .trialCount').html($('.simSlider input').val());
+        $('.simulationTag .rowCount').html(rows);
+        $('.simulationTag .columnCount').html(cols);
+        $('.simulationTag .percentage').text(failureRate);
+        drawGraph($('.simOutput .graphic'), newGraph(rows, cols));
+      });
+    });
+
+    // Initial sim setup
+    var rows = parseInt($('.rowSlider input').val());
+    var cols = parseInt($('.colSlider input').val());
+    var failureRate = parseInt($('.bridgeSlider input').val());
+    $('.simulationTag .trialCount').text($('.simSlider input').val());
+    $('.simulationTag .rowCount').text($('.rowSlider input').val());
+    $('.simulationTag .columnCount').text($('.colSlider input').val());
+    $('.simulationTag .percentage').text(failureRate);
+    drawGraph($('.simOutput .graphic'), newGraph(rows, cols));
+
+    $('.simOutput .goRedo').click(function(e) {
+      var rows = parseInt($('.rowSlider input').val());
+      var cols = parseInt($('.colSlider input').val());
+      var failureRate = parseInt($('.bridgeSlider input').val());
+      var failureRateDecimal = (100 - parseInt($('.bridgeSlider input').val())) / 100;
+      var trialCount = parseInt($('.simSlider input').val());
+
+      var animate = setInterval(function() {
+        drawGraph($('.simOutput .graphic'),nightPasses(newGraph(rows,cols),failureRateDecimal));
+      },50);
+      var result = runBulkTrial(rows,cols,failureRateDecimal,trialCount);
+      setTimeout(function() {
+        clearInterval(animate);
+      },600);
+
+      $('.dummyRow').remove();
+      $('#explore .customSimResults').append('<tr><td>' + rows + '</td><td>' + cols + '</td><td>' + failureRate + '</td><td>' + trialCount + '</td><td class="liveResult">' + result + '</td></tr>');
+
     });
 
 
