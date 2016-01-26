@@ -421,8 +421,6 @@ $(document).ready(function() {
     drawGraph($('.comboDisplay'),focusGraph);
   });
 
-  // Set up button handlers
-  function setupButtons() {
     $('.goRedo').click(function(){
         var $this = $(this);
         $this.toggleClass('again');
@@ -432,21 +430,37 @@ $(document).ready(function() {
     });
 
     $('.zeroRow .goRedo').click(function(e) {
-      var result = runBulkTrial(0,1,.5,1000, $('.zeroRow .graphic'));
+      var animate = setInterval(function() {
+        drawGraph($('.zeroRow .graphic'),nightPasses(newGraph(0,1)));
+      },50);
+      var result = runBulkTrial(0,1,.5,5000);
+      setTimeout(function() {
+        clearInterval(animate);
+      },600);
       $('.zeroRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
     });
 
     $('.threeCharts .oneRow .goRedo').click(function(e) {
-      var result = runBulkTrial(1,2,.5,1000, $('.threeCharts .oneRow .graphic'));
+      var animate = setInterval(function() {
+        drawGraph($('.threeCharts .oneRow .graphic'),nightPasses(newGraph(1,2)));
+      },50);
+      var result = runBulkTrial(1,2,.5,5000);
+      setTimeout(function() {
+        clearInterval(animate);
+      },600);
       $('.threeCharts .oneRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
     });
 
     $('.twoRow .goRedo').click(function(e) {
-      var result = runBulkTrial(2,3,.5,1000, $('.twoRow .graphic'));
+      var animate = setInterval(function() {
+        drawGraph($('.twoRow .graphic'),nightPasses(newGraph(2,3)));
+      },50);
+      var result = runBulkTrial(2,3,.5,5000);
+      setTimeout(function() {
+        clearInterval(animate);
+      },600);
       $('.twoRow .goRedo').after("<div class='result'>Probability of safety: <span class='liveResult'>" + result + "</span></div>")
     });
-  };
 
-  setupButtons();
 
 });
