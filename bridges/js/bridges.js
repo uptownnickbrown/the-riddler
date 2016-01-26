@@ -339,7 +339,7 @@ var addLabels = function($targetedChart,activeLabels) {
 
 var gridOfResults = function() {
   var $render = $('.allCombos');
-  var svgString = '<svg width="' + $('.allCombos').width() + '" height="' + $('.allCombos').height() + '" viewBox="0 0 ' +  $('.allCombos').width() + ' ' + $('.allCombos').height()  + '" xmlns="http://www.w3.org/2000/svg">';
+  var divString = '<div style="width:' + $('.allCombos').width() + 'px;position:relative;height:' + $('.allCombos').height() + 'px;">';
 
   var totalRows = 2;
   var totalCols = 3;
@@ -397,7 +397,7 @@ var gridOfResults = function() {
   var canCross = 0,
   	noCross = 0;
 
-  while (counter < 8196) {
+  while (counter < 8192) {
   	var resultString = (counter >>> 0).toString(2);
   	while (resultString.length < 13) {
   		resultString = '0' + resultString;
@@ -428,18 +428,18 @@ var gridOfResults = function() {
     for(var i in trialBridges) {
         caseData.push(trialBridges[i]);
     }
-
+    console.log(caseData);
     if (goodPaths.length > 0) {
   		canCross += 1;
-      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="6" fill="#64B464" />';
+      divString += '<div class="case" data-case="' + caseData.join('') + '" style="position:absolute; left:' + horizontalCount + 'px;top:' + vertCount + 'px;width:4px;height:6px;background-color:#64B464" />';
   	} else {
-      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="6" fill="#F06464" />';
+      divString += '<div class="case" data-case="' + caseData.join('') + '" style="position:absolute; left:' + horizontalCount + 'px;top:' + vertCount + 'px;width:4px;height:6px;background-color:#F06464" />';
   		noCross += 1;
   	}
   	counter += 1;
   }
-  svgString += '</svg>';
-  $render.html(svgString);
+  divString += '</div>';
+  $render.html(divString);
 };
 
 
@@ -509,12 +509,13 @@ $(document).ready(function() {
     // Grid of all results for the 13 bridge scenario
     gridOfResults();
     $('.case').click(function(event){
-      $('.comboDisplay').height(350);
       var outcome = $(this).data('case') + '';
       var focusGraph = newGraph(2,3);
       focusGraph = plannedNight(focusGraph, outcome);
       drawGraph($('.comboDisplay'),focusGraph);
     });
+
+    drawGraph($('.comboDisplay'),newGraph(2,3));
 
     // Table of results at the end
     $('#question-2 .goRedo').click(function(e) {
