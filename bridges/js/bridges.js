@@ -533,7 +533,8 @@ $(document).ready(function() {
 
           $result.addClass('liveResult');
           var resultCount = runBulkTrial(n,(n+1),.5,1000);
-          $result.text(resultCount);
+
+          $result.text(Math.round(resultCount * 10000) / 100);
           i += 1;
         } else {
           i += 1;
@@ -591,7 +592,7 @@ $(document).ready(function() {
       },600);
 
       $('.dummyRow').remove();
-      $('#explore .customSimResults').append('<tr><td>' + rows + '</td><td>' + cols + '</td><td>' + failureRate + '</td><td>' + trialCount + '</td><td class="liveResult">' + result + '</td></tr>');
+      $('#explore .customSimResults').append('<tr><td>' + rows + '</td><td>' + cols + '</td><td>' + failureRate + '</td><td>' + trialCount + '</td><td class="liveResult">' + Math.round(result * 10000) / 100 + '</td></tr>');
 
     });
 
