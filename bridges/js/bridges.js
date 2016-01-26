@@ -180,6 +180,44 @@ var nightPasses = function(g, failureRate) {
   return g;
 };
 
+var plannedNight = function(g, outcome) {
+  var outcomes = outcome.split('');
+  console.log(outcomes);
+
+  // a, b, c, d, e, f, g, h, i, j, k, l, m ==
+  // 1, 4, 7, 3, 6, 2, 5, 8, 10, 12, 9, 13, 13
+  // doy...
+
+  var keyMap = {
+    '0':1,
+    '1':4,
+    '2':7,
+    '3':3,
+    '4':6,
+    '5':2,
+    '6':5,
+    '7':8,
+    '8':10,
+    '9':12,
+    '10':9,
+    '11':11,
+    '12':13
+  };
+
+  var edges = g.edges();
+
+  for (i in outcomes) { // these match the letter from gridOfResults or the keys from the keymap above
+    if (outcomes[i] == 0) {
+      var edgeIndex = keyMap[i] - 1;
+      //console.log('removing edge: ' + edges[edgeIndex]);
+      g.removeEdge(edges[edgeIndex]);
+    } else {
+      //console.log('keeping edge');
+    }
+  }
+  return g;
+};
+
 var analyzeGraph = function(g) {
   // Huge props to http://www.redblobgames.com/pathfinding/a-star/introduction.html for the A* algo with early exit
   // Alternate simpler, but way slower approach uses built-in Dijkstra algo in graphlib
@@ -344,12 +382,17 @@ var gridOfResults = function() {
 
     var horizontalCount = (counter % 90) * 4;
     var vertCount = Math.floor(counter / 90) * 4;
+    var caseData = [];
 
-  	if (goodPaths.length > 0) {
+    for(var i in trialBridges) {
+        caseData.push(trialBridges[i]);
+    }
+
+    if (goodPaths.length > 0) {
   		canCross += 1;
-      svgString += '<rect x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#64B464" />';
+      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#64B464" />';
   	} else {
-      svgString += '<rect x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#F06464" />';
+      svgString += '<rect class="case" data-case="' + caseData.join('') + '" x="' + horizontalCount + '" y="' + vertCount + '" width="4" height="4" fill="#F06464" />';
   		noCross += 1;
   	}
   	counter += 1;
@@ -371,6 +414,12 @@ $(document).ready(function() {
   drawGraph($('.singleChart .twoRowAnimated .graphic'), newGraph(2,3));
 
   gridOfResults();
+  $('.case').click(function(event){
+    var outcome = $(this).data('case') + '';
+    var focusGraph = newGraph(2,3);
+    focusGraph = plannedNight(focusGraph, outcome);
+    drawGraph($('.comboDisplay'),focusGraph);
+  });
 
   // Set up button handlers
   function setupButtons() {

@@ -243,8 +243,11 @@ blockquote a {
   margin: 0px auto;
   width: 360px;
   height: 368px;
-  border: 1px solid blue;
 }
+
+ .allCombos {
+   border: 1px solid #666;
+ }
 
 .singleChart {
   width:600px;
