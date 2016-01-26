@@ -134,11 +134,14 @@ blockquote, .copy, label, output {
 
 .simulationTag {
   font-weight: 100;
-  font-size: 1.4em;
+  font-size: 1.29em;
+  margin-top: 12px;
 }
 
 .controls {
   width: 50%;
+  margin: 10px auto 0px;
+  box-sizing: border-box;
 }
 
 .simOutput {
@@ -414,9 +417,14 @@ min-width:720px;
 .slider {
     position: relative;
     display: block;
-    margin: -4px 6px 0 0;
+    margin: -4px 6px 0 46px;
     height: 60px;
     width: 200px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
 }
 
 
@@ -491,6 +499,8 @@ min-width:720px;
     width: 350px;
     height: 350px;
   }
+
+
 }
 
 @media screen and (max-width: 600px) {

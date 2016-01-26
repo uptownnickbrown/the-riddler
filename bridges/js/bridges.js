@@ -296,7 +296,7 @@ var analyzeGraph = function(g) {
 var runBulkTrial = function (totalRows, totalCols, failureRate, numTrials, $targetElement) {
   var failureRate = failureRate || .5;
   var numTrials = numTrials || 1000;
-	console.log('analyzing ' + totalRows + ' rows and ' + totalCols + ' columns, ' + numTrials + ' times with fail rate ' + failureRate);
+	//console.log('analyzing ' + totalRows + ' rows and ' + totalCols + ' columns, ' + numTrials + ' times with fail rate ' + failureRate);
 
   var i = 0,
 		results = [];
@@ -428,7 +428,7 @@ var gridOfResults = function() {
     for(var i in trialBridges) {
         caseData.push(trialBridges[i]);
     }
-    console.log(caseData);
+
     if (goodPaths.length > 0) {
   		canCross += 1;
       divString += '<div class="case" data-case="' + caseData.join('') + '" style="position:absolute; left:' + horizontalCount + 'px;top:' + vertCount + 'px;width:4px;height:6px;background-color:#64B464" />';
