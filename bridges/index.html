@@ -22,7 +22,7 @@
   <meta name="theme-color" content="#ffffff">
 
   <meta charset="utf-8">
-  <meta name="viewport" content="width=720px, initial-scale=1, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
   <script type="text/javascript" src="./js/jquery-1.9.1.js"></script>
   <script type="text/javascript" src="./js/graphlib.js"></script>
   <script type="text/javascript" src="./js/heap.js"></script>
@@ -95,7 +95,7 @@
           </div>
         </div>
       </div>
-      <p class='copy'>If we label the paths a, b, c, d, and e as in the above image, we can list out every possible combination of surviving bridges, as well as every available path to shore (a → d, a → c → e, b → e, b → c → d) to see the chance of success is exactly 50%:</p>
+      <p class='copy'>If we label the paths a, b, c, d, and e as in the above animation, we can list out every possible combination of surviving bridges, as well as every available path to shore (a → d, a → c → e, b → e, b → c → d) to see the chance of success is exactly 50%:</p>
       <table class='resultTable'>
         <thead>
 
@@ -150,7 +150,7 @@
           </div>
         </div>
       </div> -->
-      <p class='copy'>Rather than list all 8192 combinations out, let's explore them. Below are the possible outcomes — click on a cell to see the outcome of that scenario displayed. Green squares have 1 or more safe paths available, while red squares leave you trapped on the north shore:</p>
+      <p class='copy'>Rather than list all 8192 combinations out, let's explore them. Below are the possible outcomes — click on a cell to see the outcome of that scenario displayed. Green cells have one or more safe paths available, while red cells leave you trapped on the north shore:</p>
       <div class='twoCharts'>
         <div class='allCombos'>
         </div>
@@ -162,9 +162,15 @@
     <section id='question-2'>
       <p class='copy'>Ok, we feel pretty good about the first question — you've got a 50% chance of making it across the river. What about the second question?</p>
       <blockquote>
+        Now imagine a different, wider river, with many more islands — in fact, arbitrarily many. Specifically, imagine that the islands are arrayed in an N-rows-by-N+1-columns grid — similar to before, where N happened to equal two — and connected by bridges to each adjacent island in the same way. Each island adjacent to the shore is also connected by a bridge to the shore. It would look something like this:
+      </blockquote>
+      <div class='introChart'>
+        <img src='n-bridges.png'>
+      </div>
+      <blockquote>
         Question 2: What’s the probability you’ll be able to cross this river in the morning, after the same storm — with the same independent 50 percent chance of knocking out each bridge — rolls through?
       </blockquote>
-      <p class='copy'>We've already shown that for N = 0, 1 or 2 the answer is 50%. It seems likely to hold steady for larger values of N as well. Let's simulate it. Click below to run 100 trials for every value of N between 1 and 20 (warning - at higher N's this can be slow!):</p>
+      <p class='copy'>We've already shown that for N = 0, 1 or 2 the answer is 50%. It seems likely to hold steady for larger values of N as well. Let's simulate it. Click below to run 100 trials for every value of N between 1 and 20 (warning - for higher values of N this can be slow!):</p>
       <div class="buttonBank">
         <button class="button goRedo go">Go!</button>
       </div>
