@@ -113,5 +113,19 @@ while (n < 500) {
 
 // http://mathworld.wolfram.com/HarmonicSeries.html
 
+// For there to be more than 100 traffic jams, there would have to be more than 1.509×10^(43) cars on the road!
+// 15092688622113788323693563264538101449859497
+
+// Music fun facts https://plus.maths.org/content/perfect-harmony
+
+
+// The harmonic number H_{n,1} with n=\lfloor{x}\rfloor (red line) with its asymptotic limit \gamma+\ln(x) (blue line).
+
+
+// The Euler–Mascheroni constant (also called Euler's constant) is a mathematical constant recurring in analysis and number theory, usually denoted by the lowercase Greek letter gamma (γ).
+// 0.5772156649015328606065120900824024310421 + ln(N)
+
+// http://in.music.sc.edu/fs/bain/atmi02/hs/hs.pdf
+
 
 // sum_(k=1)^infty1/k
