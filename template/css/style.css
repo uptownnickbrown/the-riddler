@@ -1,0 +1,521 @@
+/* General styles */
+
+body {
+    font-family: Roboto, Helvetica, Arial;
+    font-size: .9em;
+    color: #333;
+    margin: 0;
+}
+
+.mainContainer {
+    width:100%;
+    min-width:720px;
+	margin: 0 auto;
+}
+
+section {
+	margin: 0 auto;
+}
+
+hr {
+  color: #999;
+  border: 1px solid #999;
+  margin: 25px 20% 25px 20%;
+}
+
+header {
+    width: 100%;
+    height: 90px;
+    background-color: #5799db;
+    clear: both;
+    min-width:720px;
+}
+footer {
+    height: 30px;
+    background-color: #5799db;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    border-top: 2px solid white;
+}
+
+.tenRunTrial {
+	background: #efefff;
+	width: 100%;
+	padding-top: 10px;
+	padding-bottom: 25px;
+}
+
+/* Fun Buttons */
+
+.button {
+    width: 140px;
+    height: 48px;
+    text-align: center;
+    line-height: 48px;
+    border-radius: 8px;
+    font-family: Roboto, Helvetica, Arial;
+    font-size: 1.4em;
+    background-color: #5799db;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+        border: 0;
+        cursor: pointer;
+        overflow: visible;
+        padding: 0;
+        -webkit-appearance: button; /* for input */
+        -webkit-user-select: none; /* for button */
+           -moz-user-select: none;
+            -ms-user-select: none;
+            margin: 25px auto;
+}
+
+
+.buttonBank {
+	margin: 0 auto;
+	width: 100%;
+	text-align: center;
+  display: inline-block;
+}
+
+
+@-webkit-keyframes pulse {
+  0% { background-color: #5799db; -webkit-transform:rotate(0deg); transform:rotate(0deg); width: 140px;}
+  1% { background-color: #5799db; -webkit-transform:rotate(5deg); transform:rotate(5deg);}
+  2% { -webkit-transform:rotate(-4deg); transform:rotate(-4deg);}
+  3% { background-color: #59b1f0; -webkit-transform:rotate(3deg); transform:rotate(3deg); width: 160px;}
+  4% { -webkit-transform:rotate(-2deg); transform:rotate(-2deg);}
+  5% { background-color: #5799db; -webkit-transform:rotate(0deg);  transform:rotate(0deg); width: 140px;}
+}
+
+
+a.button.go {
+  -webkit-animation-name: pulse;
+  -moz-animation-name: pulse;
+  animation-name: pulse;
+  -webkit-animation-duration: 15s;
+  -moz-animation-duration: 15s;
+  animation-duration: 15s;
+  -webkit-animation-iteration-count: 2;
+  -moz-animation-iteration-count: 2;
+  animation-iteration-count: 2;
+}
+
+.go:hover {
+	-webkit-animation: pulse 15s 1;
+	-moz-animation: pulse 15s 1;
+	animation: pulse 15s 1;
+}
+
+
+
+
+/* Typography */
+
+blockquote {
+  box-sizing:border-box;
+  border-left: 3px solid #999;
+  padding-left:25px;
+}
+
+blockquote, .copy, label, output {
+    font-family: Roboto, Helvetica, Arial;
+    vertical-align: middle;
+    text-align: left;
+    margin: 25px auto;
+    text-decoration: none;
+    font-weight: 100;
+    font-size: 1.7em;
+        max-width:1024px;
+        width:80%;
+        text-decoration: none;
+}
+
+.simulationTag {
+  font-weight: 100;
+  font-size: 1.29em;
+  margin-top: 12px;
+}
+
+.controls {
+  width: 50%;
+  margin: 10px auto 0px;
+  box-sizing: border-box;
+}
+
+.simOutput {
+  width: 50%;
+  height: 220px;
+  align-items: center;
+}
+
+.simOutput .graphic {
+  width:100%;
+  height:220px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.copy a {
+      text-decoration: none;
+      color: #5799db;
+}
+
+.buttonBank .copy {
+	vertical-align: baseline;
+}
+
+.sliderBank {
+	display: block;
+	margin: 25px auto;
+	text-align: center;
+}
+
+#explore {
+	margin-bottom: 100px;
+}
+
+h1 {
+    font-family: Roboto, Helvetica, Arial;
+    line-height: 60px;
+    vertical-align: middle;
+    font-size: 3.2em;
+    text-align: center;
+    margin: 0 0 0 0;
+    color: #fff;
+    font-weight: 500;
+}
+h3 {
+    font-family: Roboto, Helvetica, Arial;
+    vertical-align: middle;
+    text-align: center;
+    margin: 0;
+    color: #fff;
+    text-decoration: none;
+    font-weight: 300;
+}
+.twitter {
+    color: #fff;
+    text-decoration: none;
+}
+
+.copy .twitter {
+  color: #5799db;
+}
+
+blockquote a {
+  color: #5799db;
+  text-decoration:none;
+}
+
+.copyright {
+    text-align: right;
+    line-height: 3px;
+    color: #fff;
+    font-family: Roboto, Helvetica, Arial;
+    padding-right: 15px;
+}
+
+sup {
+  font-size: .7em;
+}
+
+/* Bridge charts */
+.introChart {
+  width:400px;
+  margin: 0px auto;
+}
+
+.introChart img {
+  width: 100%;
+}
+
+.simulation {
+  width:660px;
+  margin: 0px auto;
+  display:flex;
+}
+
+.threeCharts {
+  width:720px;
+  margin: 0px auto;
+  display:flex;
+}
+
+.threeCharts .inset {
+  width:240px;
+  margin: 0px auto;
+}
+
+.threeCharts .inset .graphic {
+  width:100%;
+  height:190px;
+  margin: 0 auto;
+}
+
+.threeCharts svg {
+  transition: all 300ms;
+}
+
+.result {
+    font-family: Roboto, Helvetica, Arial;
+    vertical-align: middle;
+    text-align: center;
+    margin: 5px auto;
+    text-decoration: none;
+    font-weight: 100;
+}
+
+.twoCharts {
+  width:90%;
+  max-width: 1024px;
+  min-width:900px;
+  margin: 0px auto;
+  display:flex;
+  align-items: center;
+}
+
+.twoCharts .inset {
+  width:340px;
+  margin: 0px auto;
+}
+
+.allCombos {
+  margin: 0px auto;
+  width: 512px;
+  height: 384px;
+}
+
+.twoCharts .comboDisplay {
+  margin: 0px auto;
+  width: 384px;
+  height: 384px;
+}
+
+.singleChart {
+  width:600px;
+  margin: 0px auto;
+}
+
+.singleChart .inset .graphic{
+  width:400px;
+  margin: 0px auto;
+  height:300px;
+}
+
+/* Live Results */
+
+
+/* Table styles */
+.resultTable {
+    margin: 30px auto;
+    font-family: Roboto, Helvetica, Arial;
+    font-size: 1.3em;
+    border-spacing: 0px;
+    width: 80%;
+    font-weight: 300;
+}
+
+.resultTable td {
+    padding: 6px 6px 6px 6px;
+}
+.resultTable th {
+    font-size: 1.1em;
+    padding: 6px 2px 6px 2px;
+    font-weight: 400;
+}
+.resultTable tr {
+    margin-bottom: .5em;
+}
+
+thead tr {
+    background-color: #5799db;
+    color: #fff;
+}
+thead tr th:first-child {
+    border-top-left-radius: 8px;
+    padding-left: 6px;
+}
+thead tr th:last-child {
+    border-top-right-radius: 8px;
+    padding-right: 6px;
+}
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 8px;
+}
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 8px;
+}
+
+th, td {
+    text-align: center;
+
+}
+
+.pathResults tr {
+  background-color:#64B464;
+}
+
+.pathResults .noPaths {
+  background-color: #F06464;
+}
+
+.simulationResults tr:nth-child(odd) {
+    background-color: #eee;
+}
+.simulationResults tr:nth-child(even) {
+    background-color: #ccc;
+}
+.customSimResults tr:nth-child(odd) {
+    background-color: #eee;
+}
+.customSimResults tr:nth-child(even) {
+    background-color: #ccc;
+}
+
+/* Live Results */
+.liveResult {
+	color: #e85034;
+	font-weight: 300;
+	transition: all 0.5s ease-out;
+}
+
+/* Media Queries have to come last */
+
+@media screen and (max-width: 1260px) {
+
+
+}
+
+@media screen and (max-width: 1000px) {
+  .twoCharts {
+display: block;
+min-width:720px;
+  }
+
+      .allCombos {
+    margin: 0px auto;
+    width: 512px;
+    height: 384px;
+  }
+
+  .twoCharts .comboDisplay {
+
+    display:block;
+    margin: 25px auto;
+    width: 460px;
+    height: 460px;
+  }
+}
+
+/* Sliders */
+
+/* Number slider ------------------- */
+
+.slider {
+    position: relative;
+    display: block;
+    margin: -4px 6px 0 46px;
+    height: 60px;
+    width: 200px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    width: 24px;
+    height: 24px;
+}
+
+
+/* Label ------------------- */
+
+.slider-label {
+  margin-left:4px;
+  margin-bottom:2px;
+}
+
+.slider:active .slider-label {
+    color: hsla(0,0%,0%,.7);
+    transition-delay: 0;
+}
+
+
+/* Input ------------------- */
+
+.slider-input {
+    position: relative;
+    vertical-align: middle;
+    width: 200px;
+    border-radius: 20px;
+    background: hsl(0,0%,80%);
+    box-shadow: 0 1px 0 hsla(0,0%,100%,.6);
+    overflow: hidden;
+}
+
+.slider-input::-webkit-slider-thumb,
+.slider-input::slider-thumb {
+    appearance: none;
+    border-radius: 20px;
+    width: 20px;
+    height: 20px;
+    border: 5px solid hsl(0,0%,80%);
+    cursor: pointer;
+    background: hsl(0,0%,40%);
+    box-shadow: inset 0 1px 2px hsla(0,0%,0%,.4);
+    transition: border-width .2s cubic-bezier(.26, .08, .15, 1);
+}
+
+.slider-input:active::-webkit-slider-thumb,
+.slider-input:active::slider-thumb {
+    border: 0px solid hsl(0,0%,80%);
+    transition-duration: .1;
+}
+
+.min {
+  position: absolute;
+  top: 19px;
+  left: -10px;
+}
+
+
+.simSlider .min {
+  position: absolute;
+  top: 19px;
+  left: -26px;
+}
+
+.max {
+  position: absolute;
+  top: 19px;
+  left: 206px;
+}
+
+@media screen and (max-width: 720px) {
+  .twoCharts .comboDisplay {
+
+    display:block;
+    margin: 25px auto;
+    width: 350px;
+    height: 350px;
+  }
+
+
+}
+
+@media screen and (max-width: 600px) {
+
+}
+
+@media screen and (max-width: 420px) {
+    h1 {
+        font-size: 2.4em;
+        line-height: 40px;
+    }
+    h3 {
+        font-size: 1em;
+    }
+    header {
+        height: 70px;
+    }
+}
